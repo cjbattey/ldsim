@@ -16,3 +16,4 @@ For larger classes I recommend running locally by pasting the following code int
  runGitHub(username="cjbattey",repo="LDsim")
 ```
 
+This software is free for use or modification under the GNU General Public License 3.0 (https://opensource.org/licenses/GPL-3.0)
