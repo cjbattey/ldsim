@@ -1,4 +1,4 @@
-# ldsim
+# LDsim
 An R/shiny simulation app for teaching linkage disequilibrium.
 
 For less than 10 users a web version is available at 
