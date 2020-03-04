@@ -7,7 +7,7 @@
 #    http://shiny.rstudio.com/
 #
 
-library(shiny)
+library(shiny);library(plyr);library(ggplot2)
 source("global.R")
 
 # Define UI for application that draws a histogram
@@ -33,11 +33,11 @@ ui <- fluidPage(
                                  helpText("Here's a diploid population where we're tracking two loci 
                                           (regions of the genome). At each locus there are two alleles -- 
                                           A/a and B/b. In the first generation all of the chromosomes are
-                                          either AB or ab. Recombination generates new combinations of alleles
+                                          either AB or ab. Recombination generates new combinations of alleles (haplotypes)
                                           by swapping pieces of chromosomes during meiosis -- shown here with
                                           crossing purple lines."),
                                   helpText("Try clicking 'next generation' a few times and 
-                                          see what happens to the population. Does the number of alleles generally
+                                          see what happens to the population. Does the number of haplotypes generally
                                           go up or down? What happens when we change the recombination rate (r)?"),
                                  plotOutput("pop_plot")),
                         tabPanel("frequency tables",
@@ -133,6 +133,7 @@ server <- function(input, output) {
         ggplot(data=a,aes(x=gen,y=value))+
             theme_classic()+theme(legend.position=c(0.8,0.8),legend.text=element_text(size=12))+
             ylab("Linkage Disequilibrium (D)")+xlab("Generation")+
+            ylim(min(0,min(a$value))-0.1,max(a$value)+0.1)+
             scale_color_manual(values = c("black","red"),name="")+
             geom_line(aes(col=variable))+
             geom_point(data=subset(a,variable=="simulation"),color="black",size=1)
