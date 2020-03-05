@@ -8,6 +8,7 @@ theme_set(theme_classic()+theme(axis.line = element_blank(),
 haplotype_freqs <- function(pd) {
   hf <- summary(factor(paste(pd$l1,pd$l2)))/sum(summary(factor(paste(pd$l1,pd$l2))))
   hf <- data.frame(haplotype=names(hf),frequency=hf)
+  
   rownames(hf) <- NULL
   return(hf)
 }
@@ -38,8 +39,8 @@ plot_population <- function(pop,r){
   df <- data.frame(x=-0.02,xend=0.52,y=1:nrow(pop),yend=1:nrow(pop))
   pd <- cbind(df,pop)
   hf <- haplotype_freqs(pop)
-  #mh <- c("a b","a B","A b","A B")[c("a b","a B","A b","A B") %in% hf$haplotype]
-  #hf <- rbind(hf,data.frame(haplotype=mh,frequency=0))
+  mh <- c("a b","a B","A b","A B")[!c("a b","a B","A b","A B") %in% hf$haplotype]
+  if(length(mh)>0) hf <- rbind(hf,data.frame(haplotype=mh,frequency=0))
   
   af <- allele_freqs(pop)
   pd$ind <- unlist(lapply(1:(nrow(pd)/2),function(e) rep(e,2)))
